@@ -1,0 +1,39 @@
+{
+  "name": "Daruma Good Luck #278",
+  "description": "Bringing Luck to the Ethereum Community",
+  "image": "https://darumagl.vercel.app/meta/278.png",
+  "dna": "a8751048ff99e729e05a2c240b4d38c92302292e",
+  "edition": 278,
+  "date": 1641735154425,
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Iridescent"
+    },
+    {
+      "trait_type": "Fortune (Body Color)",
+      "value": "Secret"
+    },
+    {
+      "trait_type": "Skin Color",
+      "value": "Daruma"
+    },
+    {
+      "trait_type": "Body",
+      "value": "Base Body"
+    },
+    {
+      "trait_type": "Clothes",
+      "value": "Tie"
+    },
+    {
+      "trait_type": "Face",
+      "value": "Emo"
+    },
+    {
+      "trait_type": "Head Gear",
+      "value": "Crown"
+    }
+  ],
+  "compiler": "HashLips Art Engine"
+}
