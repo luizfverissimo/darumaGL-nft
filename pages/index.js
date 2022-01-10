@@ -8,22 +8,39 @@ import web3 from '../ethereum/web3';
 
 import { FullLogo } from '../components/FullLogo';
 import { Logo } from '../components/Logo';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Home({ totalSupply, maxSupply }) {
   const [quantityForMint, setQuantityForMint] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   async function handleMint() {
+    setLoading(true);
     const accounts = await web3.eth.getAccounts();
     const mintCost = 0.01 * quantityForMint;
 
-    await darumaContract.methods.mint(quantityForMint).send({
+    const res = darumaContract.methods.mint(quantityForMint).send({
       from: accounts[0],
       value: web3.utils.toWei(mintCost.toString(), 'ether')
     });
+
+    try {
+      await toast.promise(res, {
+        duration: 3000,
+        loading: 'Waiting on transaction...',
+        success: '🎉 Mint successful! Good Luck 🍀',
+        error: 'Something went wrong! Try again. 🙁'
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <div className='w-screen min-h-screen overflow-hidden bg-theme-white scroll-smooth'>
+    <div className='w-full min-h-screen overflow-hidden bg-image scroll-smooth'>
+      <Toaster position='bottom-right' />
       <Head>
         <title>Daruma Good Luck</title>
         <meta
@@ -32,43 +49,51 @@ export default function Home({ totalSupply, maxSupply }) {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <nav className='flex items-center justify-between w-full p-4 mx-auto max-w-7xl'>
-        <Link href='/'>
-          <a>
-            <Logo width={48} height={48} />
-          </a>
-        </Link>
-        <ul className='flex items-center gap-2 text-base text-3xl font-samurai text-theme-black'>
-          <li>
-            <a href='#about'>ABOUT</a>
-          </li>
-          <li>
-            <a href='#mint'>MINT</a>
-          </li>
-          <li>
-            <a
-              href='https://testnets.opensea.io/collection/daruma-good-luck'
-              rel='noopener noreferrer'
-              target='_blank'
-            >
-              OPENSEA
-            </a>
-          </li>
-        </ul>
-      </nav>
 
-      <main className='flex flex-col items-center justify-center w-full p-4 mx-auto max-w-7xl'>
+      <main className='flex flex-col items-center justify-center w-full p-4 pb-10 mx-auto bg-theme-white max-w-7xl'>
+        <nav className='flex items-center justify-between w-full p-4 mx-auto max-w-7xl'>
+          <Link href='/'>
+            <a>
+              <Logo width={48} height={48} />
+            </a>
+          </Link>
+          <ul className='flex items-center gap-2 text-base text-3xl font-samurai text-theme-black'>
+            <li>
+              <a href='#about'>ABOUT</a>
+            </li>
+            <li>
+              <a href='#mint'>MINT</a>
+            </li>
+            <li>
+              <a
+                href='https://testnets.opensea.io/collection/daruma-good-luck'
+                rel='noopener noreferrer'
+                target='_blank'
+              >
+                OPENSEA
+              </a>
+            </li>
+          </ul>
+        </nav>
         <FullLogo width={350} height={250} />
-        <img
+        {/* <img
           src='/preview-wide.png'
           className='w-full max-h-[400px] object-cover opacity-70'
-        />
+          alt='All 300 NFTs available for minting'
+        /> */}
         <section className='flex items-center justify-between w-full mt-8'>
           <div
             id='about'
             className='flex flex-col items-center justify-center w-full '
           >
-            <img src='/preview.gif' className='w-[100px] h-[100px]' />
+            <img
+              src='/preview.gif'
+              className='w-[100px] h-[100px]'
+              alt='An animation showing the NFTs'
+              style={{
+                clipPath: 'circle(50%)'
+              }}
+            />
             <h2 className='text-6xl font-samurai text-theme-black'>ABOUT</h2>
             <p className='max-w-prose'>
               Daruma Good Luck is a project that aims to bring luck to the
@@ -123,20 +148,23 @@ export default function Home({ totalSupply, maxSupply }) {
               />
             </div>
             <button
-              className='p-4 text-5xl font-bold transition-all rounded-lg bg-theme-black text-theme-white hover:brightness-125'
+              className='p-4 text-5xl font-bold transition-all rounded-lg bg-theme-black text-theme-white hover:brightness-125 disabled:opacity-50'
               onClick={handleMint}
+              disabled={loading}
             >
               MINT
             </button>
           </div>
         </section>
-        {/* <Image
-          src='/preview.gif'
-          width={350}
-          height={250}
-          objectFit='contain'
-        /> */}
       </main>
+
+      <footer className='flex items-center justify-center w-full h-[64px] bg-theme-black text-theme-white'>
+        <img
+          src='/logo-white.png'
+          alt='Daruma Good Luck Logo in white'
+          className='w-[24px]'
+        />
+      </footer>
     </div>
   );
 }
