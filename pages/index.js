@@ -48,7 +48,7 @@ export default function Home({ totalSupply, maxSupply }) {
           <li>
             <a
               href='https://testnets.opensea.io/collection/daruma-good-luck'
-              rel='noopener noreferer'
+              rel='noopener noreferrer'
               target='_blank'
             >
               OPENSEA
