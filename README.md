@@ -5,6 +5,8 @@
 <p>
 </p>
 
+THIS PROJECT WAS CREATED WITH RINKEBY TEST NET WITCH IS NOW DISCONTINUED
+
 > ⛓ NFT Minter Dapp, created with Web3, React, Next.js and TailwindCSS. This project use the Rinkeby Test Network, to interact with this project you must have a Metamask account and some ethereum in the account (you can get some ethereum [here](https://faucets.chain.link/rinkeby)).
 
 ### 🏠 [Homepage](https://darumagl.vercel.app/)
